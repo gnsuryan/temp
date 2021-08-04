@@ -24,7 +24,7 @@
 			"forceUpdateTag": "[parameters('utcValue')]",
 			"azCliVersion": "latest",
 			"primaryScriptUri": "https://raw.githubusercontent.com/gnsuryan/temp/master/runScript.sh",
-			"arguments": "[concat('-name', ' ', parameters('name'))]",
+			"arguments": "[concat('-n', ' ', parameters('name'))]",
 			"timeout": "PT1H",
 			"cleanupPreference": "OnSuccess",
 			"retentionInterval": "P1D"
