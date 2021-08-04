@@ -22,7 +22,7 @@
 		"kind": "AzureCLI",
 		"properties": {
 			"forceUpdateTag": "[parameters('utcValue')]",
-			"azCliVersion": "latest",
+			"azCliVersion": "2.9.1",
 			"primaryScriptUri": "https://raw.githubusercontent.com/gnsuryan/temp/master/runScript.sh",
 			"arguments": "[concat('-n', ' ', parameters('name'))]",
 			"timeout": "PT1H",
