@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"name": {
+			"type": "string",
+			"defaultValue": "azureTest"
+		},
+		"utcValue": {
+			"type": "string",
+			"defaultValue": "[utcNow()]"
+		}
+	},
+	"variables": {
+		"const_currentSubscription": "[subscription().subscriptionId]"
+	},
+	"resources": [{
+		"type": "Microsoft.Resources/deploymentScripts",
+		"apiVersion": "2020-10-01",
+		"dependsOn": [
+			"[resourceId('Microsoft.Resources/deployments', ${admin.start})]"
+		],
+		"name": "runAzureCLIDeploymentScript",
+		"location": "[resourceGroup().location]",
+		"kind": "AzureCLI",
+		"properties": {
+			"forceUpdateTag": "[parameters('utcValue')]",
+			"AzureCLI": "latest",
+			"primaryScriptUri": "https://raw.githubusercontent.com/gnsuryan/temp/master/runScript.sh",
+			"arguments": "[concat('-name', ' ', parameters('name'))]",
+			"timeout": "PT1H",
+			"cleanupPreference": "OnSuccess",
+			"retentionInterval": "P1D"
+		}
+	}],
+  "outputs": {
+	  "result": {
+      "value": "[reference('runAzureCLIDeploymentScript').outputs.text]",
+      "type": "string"
+    }
+  }
+}
