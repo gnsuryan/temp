@@ -1,0 +1,40 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+	  "username": {
+			"type": "string",
+			"defaultValue": "weblogic"
+      },
+      "password": {
+			"type": "secureString"
+	  }
+	},
+	"variables": {
+		"const_currentSubscription": "[subscription().subscriptionId]",
+        "const_arguments": "[concat(parameters('username'),' ',parameters('password')]"
+	},
+	"resources": [{
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2020-06-01",
+            "name": "newuserscript",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "https://raw.githubusercontent.com/gnsuryan/temp/master/testScript.sh"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "[concat('cat testScript.sh | bash /dev/stdin',' ',variables('const_arguments'))]"
+                }
+            }
+    }
+  ],
+  "outputs": {
+	}
+}
