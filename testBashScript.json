@@ -12,7 +12,7 @@
 	},
 	"variables": {
 		"const_currentSubscription": "[subscription().subscriptionId]",
-        "const_arguments": "[concat(parameters('username'),' ',parameters('password')]"
+        "const_arguments": "[concat(parameters('username'),' ',parameters('password'))]"
 	},
 	"resources": [{
             "type": "Microsoft.Compute/virtualMachines/extensions",
